@@ -192,35 +192,30 @@ def draw_lines(img, lines, color=[255, 0, 0], thickness=10):
                 lines_on_other_side.append(line)
     lines_on_sample_side = np.array(lines_on_sample_side)
     lines_on_the_other_side = np.array(lines_on_other_side)
-    # step 3:
-    # calculate the slope for the other side
-    # first find the longest line for the other side
-    longest_line = np.array([[0, 0, 0, 0]])
-    for line in lines_on_other_side:
-        x1_ll, y1_ll, x2_ll, y2_ll = longest_line[0][0], longest_line[0][1], \
-            longest_line[0][2], longest_line[0][3]
+
+    # step 2a: average the slopes of all lines from the sample side
+    # let the result be the slope for the sample side which we will use
+    # in the following step
+
+    slopes_sample = []
+    for line in lines_on_sample_side:
         for x1, y1, x2, y2 in line:
-            if (x1 - x2) ** 2 + (y1 - y2) ** 2 > (x1_ll - x2_ll) ** 2 + (y1_ll - y2_ll) ** 2:
-                longest_line = line
-    # get the longest line from the other side and calculate the slope
-    line_other = longest_line[0]
-    x1, y1, x2, y2 = line_other[0], line_other[1], line_other[2], line_other[3]
-    slope_other = (y2 - y1) / (x2 - x1)
+            slopes_sample.append((y2 - y1) / (x2 - x1))
+    slope_sample = np.average(slopes_sample)
+
+    # step 3:
+    # calculate slope for the other side by calculating
+    # the average of the slopes of all lines on the other side
+    slopes_other = []
+    for line in lines_on_other_side:
+        for x1, y1, x2, y2 in line:
+            slopes_other.append((y2 - y1) / (x2 - x1))
+    slope_other = np.average(slopes_other)
     # find the middle point of the longest line for the other side, extract the resulting nested array
     # we will user the point to calculate the interception point for y = m * x + b
     # same goes for the other side
     mid_point_other = [np.array([abs((x2 - x1) / 2) + min(x1, x2), abs((y2 - y1) / 2) + min(y1, y2)]) \
         for (x1, y1, x2, y2) in longest_line][0]
-    # find the middle points for all the line segments
-    # the following is like [[np.array()], ...]
-    # mid_points_sample_side = [[np.array([abs((x2 - x1) / 2) + min(x1, x2), abs((y2 - y1) / 2) + min(y1, y2)]) \
-    #     for (x1, y1, x2, y2) in line] for line in lines_on_sample_side]
-    # mid_points_other_side = [[np.array([abs((x2 - x1) / 2) + min(x1, x2), abs((y2 - y1) / 2) + min(y1, y2)]) \
-    #     for (x1, y1, x2, y2) in line] for line in lines_on_other_side]
-    # find the average points of the middle points
-    # the following is of the form [[avg1, avg2]], better extract the point
-    # avg_mids_sample_side = np.average(mid_points_sample_side, axis=0)[0]
-    # avg_mids_other_side = np.average(mid_points_other_side, axis=0)[0]
 
     # step 4: find the top point and bottom point for both sides
     # and connect each pair to form a single long line for each side
