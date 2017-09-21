@@ -53,4 +53,4 @@ I introduced some bugs when implementing `draw_lines()`. I thought about testing
 
 Improvements can be made upon the shortcomings above.
 
-Besides, my implementation can not handle the challenge video. From the slack channel I noticed it's about excluding outliers. From the video we can see that the right lane line are more curved than lines in other videos. This means outliers. There are several algorithms available. I'm kind of behind the schedule so I decide not to implement them here.
+Besides, my implementation can not handle the challenge video. From the slack channel I noticed it's about excluding outliers. From the video we can see that the right lane line is more curved than lines in other videos. This means outliers. There are several algorithms available. I'm kind of behind the schedule so I decide not to implement them here.
