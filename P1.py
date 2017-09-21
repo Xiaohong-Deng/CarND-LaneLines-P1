@@ -211,16 +211,6 @@ def draw_lines(img, lines, color=[255, 0, 0], thickness=10):
     # same goes for the other side
     mid_point_other = [np.array([abs((x2 - x1) / 2) + min(x1, x2), abs((y2 - y1) / 2) + min(y1, y2)]) \
         for (x1, y1, x2, y2) in longest_line][0]
-    # find the middle points for all the line segments
-    # the following is like [[np.array()], ...]
-    # mid_points_sample_side = [[np.array([abs((x2 - x1) / 2) + min(x1, x2), abs((y2 - y1) / 2) + min(y1, y2)]) \
-    #     for (x1, y1, x2, y2) in line] for line in lines_on_sample_side]
-    # mid_points_other_side = [[np.array([abs((x2 - x1) / 2) + min(x1, x2), abs((y2 - y1) / 2) + min(y1, y2)]) \
-    #     for (x1, y1, x2, y2) in line] for line in lines_on_other_side]
-    # find the average points of the middle points
-    # the following is of the form [[avg1, avg2]], better extract the point
-    # avg_mids_sample_side = np.average(mid_points_sample_side, axis=0)[0]
-    # avg_mids_other_side = np.average(mid_points_other_side, axis=0)[0]
 
     # step 4: find the top point and bottom point for both sides
     # and connect each pair to form a single long line for each side
