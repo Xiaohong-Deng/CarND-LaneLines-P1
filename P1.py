@@ -153,6 +153,9 @@ def draw_lines(img, lines, color=[255, 0, 0], thickness=10):
     imgshape = img.shape
     # get y coordinate of the highest point for future use
     top_y_coordinate = imgshape[0]
+
+    # step 1: calculate a slope for one of the longest line segments
+
     # to get a more accurate slope, find the longest line segment first
     longest_line = np.array([[0, 0, 0, 0]])
     for line in lines:
@@ -171,6 +174,9 @@ def draw_lines(img, lines, color=[255, 0, 0], thickness=10):
     # same goes for the other side
     mid_point_sample = [np.array([abs((x2 - x1) / 2) + min(x1, x2), abs((y2 - y1) / 2) + min(y1, y2)]) \
         for (x1, y1, x2, y2) in longest_line][0]
+
+    # step2: classify all lines to two groups, according to the slope we find in step 1
+    #
     # seperate lines to two sides, respectively, base on the slope
     lines_on_sample_side = []
     lines_on_other_side = []
@@ -186,6 +192,7 @@ def draw_lines(img, lines, color=[255, 0, 0], thickness=10):
                 lines_on_other_side.append(line)
     lines_on_sample_side = np.array(lines_on_sample_side)
     lines_on_the_other_side = np.array(lines_on_other_side)
+    # step 3:
     # calculate the slope for the other side
     # first find the longest line for the other side
     longest_line = np.array([[0, 0, 0, 0]])
@@ -214,6 +221,10 @@ def draw_lines(img, lines, color=[255, 0, 0], thickness=10):
     # the following is of the form [[avg1, avg2]], better extract the point
     # avg_mids_sample_side = np.average(mid_points_sample_side, axis=0)[0]
     # avg_mids_other_side = np.average(mid_points_other_side, axis=0)[0]
+
+    # step 4: find the top point and bottom point for both sides
+    # and connect each pair to form a single long line for each side
+
     # to find the bottom point and the top point for the sample side
     # first find b in y = m * x + b
     interception_sample_line = mid_point_sample[1] - slope_sample * mid_point_sample[0]
@@ -232,6 +243,9 @@ def draw_lines(img, lines, color=[255, 0, 0], thickness=10):
 
     top_x_other_side = (top_y_coordinate - interception_other_line) / slope_other
     line_other_side = [np.append(bottom_point_other_side, [top_x_other_side, top_y_coordinate])]
+
+    # step 5: combine the two lines and draw them on the image
+
     # two_lines is of the form [[1,2,3],[4,5,6]]
     two_lines = np.array([line_sample_side, line_other_side])
     for line in two_lines.astype(int):
