@@ -30,7 +30,7 @@ My pipeline consisted of 7 steps.
 6. I synthesised a new image from the original image and the image from step 5. In the new image lane lines are in red.
 7. I printed and saved the new image to disc.
 
-In order to draw a single line on the left and right lanes, I modified the draw_lines() function by the following steps.
+In order to draw a single line on the left and right lanes, I modified the `draw_lines()` function by the following steps.
 1. Found out the longest line among all lines, calculated its slope.
 2. Based on the slope from step 1, classified all lines to two groups, indicating left and right lines
 3. Calculated the slope by finding the longest line from the other group.
@@ -44,7 +44,7 @@ You cam look up the output images in P1.ipynb.
 
 ### 2. Identify potential shortcomings with your current pipeline
 
-In the video proudced by using my customized `draw_lines()`, the two lines are trembling. Wonder what improvement can be made to make them steady.
+In the video proudced by using my customized `draw_lines()`, the two lines are trembling. Wonder what improvement can be made to make them steady. It could be the outliers in the lines causing this.
 
 I introduced some bugs when implementing `draw_lines()`. I thought about testing afterwards. I should extract the steps to seperate methods. Unit test them. Stub method calls and use dummy data to test them in isolation. I would've done that if I were familiar with ipython testing or python testing and had the time. I could use some good suggestions here.
 
@@ -52,3 +52,5 @@ I introduced some bugs when implementing `draw_lines()`. I thought about testing
 ### 3. Suggest possible improvements to your pipeline
 
 Improvements can be made upon the shortcomings above.
+
+Besides, my implementation can not handle the challenge video. From the slack channel I noticed it's about excluding outliers. From the video we can see that the right lane line are more curved than lines in other videos. This means outliers. There are several algorithms available. I'm kind of behind the schedule so I decide not to implement them here.
