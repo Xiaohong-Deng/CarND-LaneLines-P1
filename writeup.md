@@ -37,7 +37,7 @@ In order to draw a single line on the left and right lanes, I modified the `draw
 4. Found the top point and bottom point for both sides using the equation y = m * x + b
 5. Top point and bottom point formed the long solid line for each side. Drew the line. 
 
-I also tried using the averaging the slopes of all lines for both sides instead of using the slope for the longest lines. Didn't work well. I guess I need to give different lines different weights while averaging them. But based on what metrics?
+I also tried using the averaging the slopes of all lines for both sides instead of using the slope for the longest lines. Didn't work well. I guess I need to give different lines different weights while averaging them. But based on what metrics? I can also exclude outliers who contribute noise to the averaging. Might be the better way.
 
 You cam look up the output images in P1.ipynb.
 
