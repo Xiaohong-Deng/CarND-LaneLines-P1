@@ -165,7 +165,7 @@ def draw_lines(img, lines, color=[255, 0, 0], thickness=10):
             if (x1 - x2) ** 2 + (y1 - y2) ** 2 > (x1_ll - x2_ll) ** 2 + (y1_ll - y2_ll) ** 2:
                 longest_line = line
     # now calculate slope for one side, call it sample side
-    # line in lines a nested np.array like [[1,2,3,4]]
+    # line in lines is a nested np.array like [[1,2,3,4]]
     line_sample = longest_line[0]
     x1, y1, x2, y2 = line_sample[0], line_sample[1], line_sample[2], line_sample[3]
     slope_sample = (y2 - y1) / (x2 - x1)
